@@ -1,0 +1,68 @@
+<div class="container mt-4">
+    <form  >
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="aligner">
+  <span class="libe">libelle</span> 
+   <input type="text" name="libelleInput" class="form-control flex-grow-1" id="libelleInput"
+    [(ngModel)]="libelleValue"
+    (input)="checkLibelleExists(libelleValue)"> 
+    <button type="submit" class="btn btn-primary mt-3"
+  [disabled]="boutonAjout " (click)="ajouterModifierCategorie()">
+  {{ ajoutEditMode ? 'Ajout' : 'Edit' }}
+  </button>
+      </div>
+        <div class="espace">
+        <label class="switch-label left-label">Edit</label>
+        <span class="circuit">
+          <span class="switch" [class.active]="ajoutEditMode" (click)="toggleAjoutMode()">
+          </span>
+        </span>
+        <label class="switch-label left-label">ajout</label>
+      </div>
+      </div>
+     
+  
+  
+      <button type="button" id="supprimer" (click)="supprimer()" class="btn btn-danger mt-3 float-right"
+      [disabled]="deleteButtonDisabled " >Supprimer</button>
+    
+    </form>
+  
+  
+  
+          <h4>Liste des Catégories</h4>
+          
+          <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">
+                    <input id="bouton" class="form-check-input" name="checkbox" type="checkbox" [(ngModel)]="cheekAll" (change)="cheeked()" (change)="changeckeek()" [disabled]="ajoutEditMode">
+                  </th>
+                  <th scope="col" >Libelle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let categorie of categories.reverse()" (click)="chargerEdition(categorie)" >               
+                   <td>
+                    <div class="form-check">
+                      <!-- (change)="getId(categorie.id) -->
+                      <input class="form-check-input" name="checkbox" type="checkbox" [checked]="check"  (change)="changeckeek()" [disabled]="ajoutEditMode" value="{{categorie.id}}" [(ngModel)]="categorie.checked">
+                    </div>
+                  </td>
+                  <td>{{ categorie.libelle }}</td>
+                </tr>
+              </tbody>
+            </table>
+            
+  
+  
+          <div class="pagination mt-4">
+              <button (click)="changePage(-1)" [disabled]="currentPage === 1" class="btn btn-secondary"><<</button>
+              <button *ngFor="let page of pages" (click)="goToPage(page)" [class.active]="currentPage === page" class="btn btn-secondary">{{ page }}</button>
+              <button (click)="changePage(1)" [disabled]="currentPage === totalPages" class="btn btn-secondary">>></button>
+          </div>
+      </div>
+  
+  
+  
+  
