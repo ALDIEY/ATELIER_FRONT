@@ -1,10 +1,12 @@
 import { Fournisseur } from "../model/fournisseur.model";
+import { Categorie } from "../model/categorie.model";
 export interface Article {
+ 
+categories: Categorie[];
     id: number;
   libelle: string;
   prix: number;
-  stock: number;
-  categorieId: number;
+  quantite: number;
   categorieLibelle: string;
   photo:string;
 //  fournisseurs:[],

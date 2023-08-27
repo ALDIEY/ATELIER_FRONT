@@ -1,67 +1,72 @@
 <div class="container">
-  <form [formGroup]="articleFormGroupe"  class="row">
-    <div class="col-md-6">
-      <div class="form-group row">
-        <label for="libelle">Libellé</label>
-        <input type="text" class="form-control" id="libelle" formControlName="libelle">
-        <!-- Autres contrôles -->
-      </div>
-    </div>
-    
-    <div class="col-md-6">
-      <div class="form-group text-center" id="photo">
-        <label for="photo">Photo</label>
-        <div class="image" (click)="selectImageInput()">
-          <input hidden enctype="multipart/form-data" type="file" class="form-control" id="photo" name="photo" #photoInput (change)="onFileSelected($event)">
-          <img class="photo" [src]="url" alt="Image par défaut">
-          <!-- <small class="text-danger" *ngIf="submitted && formulaire.controls['photo'].errors?.required">La photo est requise.</small>
-          <small class="text-danger" *ngIf="submitted && formulaire.controls['photo'].errors?.mimes">La photo doit être au format JPEG, PNG, JPG, GIF ou SVG.</small>
-        -->
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <form [formGroup]="articleFormGroupe" class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="libelle">Libellé</label>
+            <input type="text" class="form-control" id="libelle" formControlName="libelle">
+          </div>
+          <div class="form-group">
+            <label for="prix">Prix</label>
+            <input type="number" class="form-control" id="prix" formControlName="prix">
+          </div>
+          <div class="form-group">
+            <label for="categorie">Catégorie</label>
+            <select class="form-control" id="categorie" formControlName="categorie">
+              <option value="">Sélectionner une catégorie</option>
+              <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.libelle }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+
+          <div class="selected-fournisseurs">
+            <div class="selected-fournisseur" *ngFor="let fournisseur of selectedFournisseurs" formControlName="fournisseurs">
+              {{ fournisseur.nom }}
+              <span class="remove-icon" (click)="deleteFournisseur(fournisseur)">&times;</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="rechercheFournisseurs">Rechercher un fournisseur</label>
+            <input
+              type="text"
+              class="form-control"
+              id="rechercheFournisseurs"
+              formControlName="rechercheFournisseurs"
+              (input)="onSeachFournisseur($event)"
+            >
+          </div>
+          
+          <div class="fournisseurs-search-results">
+            <div class="fournisseur-search-result" *ngFor="let fournisseur of fournisseurSearch">
+              <input
+                type="checkbox"
+                [checked]="fournisseur.checked"
+                (change)="toggleFournisseurSelection(fournisseur)"
+              >
+              {{ fournisseur.nom }}
+              <span class="remove-icon" *ngIf="fournisseur.checked" (click)="deleteFournisseur(fournisseur)">&times;</span>
+            </div>
+          </div>
+          
         </div>
+        
       </div>
-      <div  class="form-group text-center">
-        <label for="ref" class="col-form-label">REF</label>
-        <input type="text" class="form-control" id="ref" name="ref" [value]="reference" readonly>
-      </div>
-    </div>
+        <div class="col-md-6">
+          <div class="form-group text-center" id="photo">
+            <div class="image" (click)="selectImageInput()">
+              <input hidden enctype="multipart/form-data" type="file" class="form-control" id="photo" name="photo" #photoInput (change)="onFileSelected($event)">
+              <img class="photo" [src]="url" alt="Image par défaut">
+            </div>
+            <div class="form-group text-center">
+              <label for="ref" id="refe" class="col-form-label">REF</label>
+              <input type="text" class="form-control" id="ref" name="ref" [value]="reference" readonly>
+            </div>
+          </div>
+        </div>
     
-    <div class="col-md-6">
-      <div class="form-group row">
-        <label for="prix">Prix</label>
-        <input type="number" class="form-control" id="prix" formControlName="prix">
-        <!-- Autres contrôles -->
-      </div>
+      </form>
     </div>
-    
-    <div class="col-md-6">
-      <!-- Autres contrôles -->
-    </div>
-    
-    <div class="col-md-6">
-      <div class="form-group row">
-        <label for="categorie">Catégorie</label>
-        <select class="form-control" id="categorie" formControlName="categorie">
-          <option value="">Sélectionner une catégorie</option>
-          <option *ngFor="let categorie of categories" [value]="categorie.id">{{ categorie.libelle }}</option>
-        </select>
-      </div>
-    </div>
-    
-    <div class="col-md-6">
-      <!-- Autres contrôles -->
-    </div>
-    
-    <div class="col-md-6">
-      <div class="form-group row">
-        <label for="fournisseurs">Fournisseurs</label>
-        <select class="form-control" multiple formControlName="fournisseurs">
-          <!-- <option *ngFor="let fournisseur of selectedFournisseurs" [ngValue]="fournisseur.id">{{ fournisseur.nom }}</option> -->
-        </select>
-      </div>
-    </div>
-    
-    <div class="col-md-6">
-      <!-- Autres contrôles -->
-    </div>
-  </form>
+  </div>
 </div>

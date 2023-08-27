@@ -9,7 +9,9 @@ import { CategorieComponent } from './categorie/categorie.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormComponent } from './article/form/form.component';
 import { ListComponent } from './article/list/list.component';
-import { PaginationComponent } from './article/pagination/pagination.component';
+import { NgxPaginationModule } from 'ngx-pagination'; // Importez le module de pagination ici
+
+import { PaginationComponent } from './article/list/pagination/pagination.component';
 import { ItemComponent } from './article/list/item/item.component'; // Importez FormsModule
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { ItemComponent } from './article/list/item/item.component'; // Importez 
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule // Ajoutez ReactiveFormsModule ici
+    ReactiveFormsModule ,// Ajoutez ReactiveFormsModule ici,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,1 +1,38 @@
-<p>item works!</p>
+<!-- item.component.html -->
+<div class="toInsertRow"  *ngFor="let article of articles | paginate
+: {
+    itemsPerPage: tableSize,
+    currentPage: page,
+    totalItems: count
+  };
+let i = index">
+    <tr class="d-flex " id="{{ article.id }}">
+      <td style="margin-left: 10px;">{{ article.libelle }}</td>
+      <td style="margin-left: 60px;">{{ article.prix }}</td>
+      <td style="margin-left: 60px;" >{{ article.quantite }}</td>
+      <td style="margin-left: 60px;" >{{ article.categories}}</td>
+      <td>
+        <button
+          class="btn btn-sm  editButton"
+          style="margin-right: 25px"
+          style="margin-left: 150px;"
+          disabled
+        >
+          Edit
+        </button>
+        <button
+          class="btn btn-sm btn-danger"
+          *ngIf="!article.confirmingDelete; else confirmingDelete"
+        >
+          Supprimer
+        </button>
+        <ng-template #confirmingDelete>
+          <button class="btn btn-sm btn-danger">
+            OK &nbsp;&nbsp;&nbsp; {{ article.countdown }} &nbsp;&nbsp;&nbsp;&nbsp;
+          </button>
+        </ng-template>
+      </td>
+    </tr>
+</div>
+  
+  

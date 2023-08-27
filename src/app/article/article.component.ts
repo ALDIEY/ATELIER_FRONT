@@ -4,6 +4,7 @@ import { ArticleService } from '../services/articleService/article.service';
 import { Categorie } from '../model/categorie.model';
 import { Fournisseur } from '../model/fournisseur.model';
 import { FormComponent } from './form/form.component';
+import { Article } from '../model/article.model';
 
 @Component({
   selector: 'app-article',
@@ -12,6 +13,8 @@ import { FormComponent } from './form/form.component';
 })
 export class ArticleComponent implements OnInit {
   // articleForm: FormGroup;
+  articles: Article[] = [];
+
   formulaire!: FormGroup;
   // dataForm:DataForm
   categories: Categorie[] = []; // Votre tableau de catégories
@@ -21,12 +24,21 @@ export class ArticleComponent implements OnInit {
   // @ViewChild(FormComponent,{static:false}) formComponent=<FormComponent>=;
 
   constructor(
+    private articleService: ArticleService,
+    private formBuilder: FormBuilder
     // private formBuilder: FormBuilder,
     // private articleService: ArticleService
-  ) {}
-  articleService: any;
-  formBuilder: any;
-
+  ) {
+  this.articleService.All().subscribe(
+   (response)=>{
+  this.articles=response
+ 
+  console.log(this.articles);
+  
+  } 
+    )
+  }
+  // formBuilder: any;
   ngOnInit() {
     this.initForm();
     // this.loadCategories();
@@ -44,35 +56,35 @@ export class ArticleComponent implements OnInit {
     });
   }
 
-  ajouterArticle() {
-    this.submitted = true;
-    if (this.formulaire.invalid) {
-      return;
-    }
+  // ajouterArticle() {
+  //   this.submitted = true;
+  //   if (this.formulaire.invalid) {
+  //     return;
+  //   }
 
-    // Construction de l'objet d'article à partir des valeurs du formulaire
-    const nouvelArticle = {
-      libelle: this.formulaire.value.libelle,
-      prix: this.formulaire.value.prix,
-      stock: this.formulaire.value.stock,
-      categorie: this.formulaire.value.categorie,
-      fournisseurs: this.formulaire.value.fournisseurs,
-      photo:this.formulaire.value.photo,
-      reference:this.formulaire.value.reference
+  //   // Construction de l'objet d'article à partir des valeurs du formulaire
+  //   const nouvelArticle = {
+  //     libelle: this.formulaire.value.libelle,
+  //     prix: this.formulaire.value.prix,
+  //     stock: this.formulaire.value.stock,
+  //     categorie: this.formulaire.value.categorie,
+  //     fournisseurs: this.formulaire.value.fournisseurs,
+  //     photo:this.formulaire.value.photo,
+  //     reference:this.formulaire.value.reference
 
-    };
+  //   };
 
-    this.articleService.create(nouvelArticle).subscribe(
-      () => {
-        this.successMessage = 'Article ajouté avec succès.';
-        this.submitted = false;
-        this.formulaire.reset();
-      },
-      (error: any) => {
-        console.error("Erreur lors de l'ajout de l'article :", error);
-      }
-    );
-  }
+  //   this.articleService.create(nouvelArticle).subscribe(
+  //     () => {
+  //       this.successMessage = 'Article ajouté avec succès.';
+  //       this.submitted = false;
+  //       this.formulaire.reset();
+  //     },
+  //     (error: any) => {
+  //       console.error("Erreur lors de l'ajout de l'article :", error);
+  //     }
+  //   );
+  // }
 
   modifierArticle() {
     this.submitted = true;
